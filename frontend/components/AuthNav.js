@@ -26,13 +26,13 @@ export default function AuthNav() {
       <div className="flex items-center gap-2">
         <Link
           href="/auth"
-          className="flex items-center gap-1.5 border border-white/30 bg-white/10 px-4 py-2 rounded-xl text-sm font-semibold text-white hover:bg-white/20 transition-colors"
+          className="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white sm:inline-flex"
         >
           Sign In
         </Link>
         <Link
           href="/jobs/new"
-          className="flex items-center gap-1.5 bg-white text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-50 active:bg-blue-100 transition-colors shadow-sm"
+          className="primary-button animate-sheen px-4 py-2.5 text-sm"
         >
           <span className="text-base leading-none">＋</span> Post a Job
         </Link>
@@ -42,17 +42,20 @@ export default function AuthNav() {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="hidden sm:inline text-sm text-blue-100">Signed in as {auth.user?.name || auth.user?.email}</span>
+      <div className="hidden rounded-2xl border border-white/60 bg-white/65 px-3 py-2 text-right shadow-sm sm:block">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">Signed in</p>
+        <p className="text-sm font-semibold text-slate-700">{auth.user?.name || auth.user?.email}</p>
+      </div>
       <Link
         href="/jobs/new"
-        className="flex items-center gap-1.5 bg-white text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-50 active:bg-blue-100 transition-colors shadow-sm"
+        className="primary-button animate-sheen px-4 py-2.5 text-sm"
       >
         <span className="text-base leading-none">＋</span> Post a Job
       </Link>
       <button
         type="button"
         onClick={clearAuth}
-        className="border border-white/25 bg-white/10 px-4 py-2 rounded-xl text-sm font-semibold text-white hover:bg-white/20 transition-colors"
+        className="secondary-button px-4 py-2.5"
       >
         Log Out
       </button>

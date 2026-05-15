@@ -85,36 +85,42 @@ export default function NewJobPage() {
     }
   };
 
-  const inputBase =
-    'w-full rounded-xl px-4 py-2.5 text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition';
+  const inputBase = 'soft-input';
   const inputClass = (field) =>
-    `${inputBase} ${errors[field] ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-white'}`;
+    `${inputBase} ${errors[field] ? 'border-rose-300 bg-rose-50' : ''}`;
 
   if (authChecked && !auth) {
     return (
-      <div className="max-w-2xl mx-auto">
+      <div className="mx-auto max-w-4xl animate-fade-up">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors mb-4"
+          className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 shadow-sm transition hover:bg-white"
         >
           ← Back to jobs
         </Link>
 
-        <div className="rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-xl">
-          <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 px-6 py-8 text-white">
-            <p className="text-xs uppercase tracking-[0.25em] text-blue-200 font-semibold mb-2">Authentication</p>
-            <h1 className="text-3xl font-extrabold mb-2">Sign in to post a job</h1>
-            <p className="text-sm text-blue-100">
-              Posting requests is restricted to authenticated users.
-            </p>
-          </div>
-          <div className="p-6">
-            <Link
-              href="/auth?next=/jobs/new"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-colors"
-            >
-              Sign In or Register
-            </Link>
+        <div className="glass-panel-strong overflow-hidden">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="bg-gradient-to-br from-teal-700 via-teal-800 to-slate-900 px-6 py-8 text-white sm:px-8">
+              <p className="section-label mb-3 text-teal-100/80">Authentication</p>
+              <h1 className="text-4xl font-extrabold leading-tight">Sign in to post a job</h1>
+              <p className="mt-4 max-w-md text-sm leading-7 text-teal-50/85">
+                Protected posting keeps requests cleaner and gives you a smoother follow-up flow later.
+              </p>
+            </div>
+            <div className="px-6 py-8 sm:px-8">
+              <div className="rounded-3xl bg-teal-50 px-5 py-5 text-sm leading-7 text-slate-600">
+                Posting requests is restricted to authenticated users.
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link href="/auth?next=/jobs/new" className="primary-button">
+                  Sign In or Register
+                </Link>
+                <Link href="/" className="secondary-button">
+                  Browse Jobs
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -122,194 +128,180 @@ export default function NewJobPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      {/* â”€â”€ Page header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <div className="mb-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors mb-4"
-        >
-          ← Back to jobs
-        </Link>
+    <div className="mx-auto max-w-6xl animate-fade-up">
+      <Link
+        href="/"
+        className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 shadow-sm transition hover:bg-white"
+      >
+        ← Back to jobs
+      </Link>
 
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 px-6 py-7 text-white shadow-lg">
-          <div className="pointer-events-none absolute -top-10 -right-10 w-48 h-48 rounded-full bg-white/5" />
-          <div className="relative z-10">
-            <p className="text-blue-200 text-xs font-semibold uppercase tracking-widest mb-1">
-              New Request
-            </p>
-            <h1 className="text-2xl font-extrabold mb-1">Post a Service Request</h1>
-            <p className="text-blue-100 text-sm">
-              {auth?.user?.name
-                ? `Signed in as ${auth.user.name}. Describe what you need done and we&apos;ll connect you with the right tradesperson.`
-                : 'Describe what you need done and we&apos;ll connect you with the right tradesperson.'}
-            </p>
-          </div>
-        </div>
-      </div>
+      <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
+        <aside className="space-y-6">
+          <section className="glass-panel-strong relative overflow-hidden px-6 py-8 sm:px-8">
+            <div className="absolute -right-10 top-0 h-36 w-36 rounded-full bg-amber-200/40 blur-3xl" />
+            <div className="relative">
+              <p className="section-label mb-3">New request</p>
+              <h1 className="text-4xl font-extrabold leading-tight text-slate-900">Post work that gets clear responses.</h1>
+              <p className="mt-4 text-sm leading-7 text-slate-600">
+                {auth?.user?.name
+                  ? `Signed in as ${auth.user.name}. Add the essentials and local tradespeople can understand the job at a glance.`
+                  : 'Describe the problem clearly and make it easy for tradespeople to respond with confidence.'}
+              </p>
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        {/* â”€â”€ Server error â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        {serverError && (
-          <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
-            <span>⚠️</span> {serverError}
-          </div>
-        )}
-
-        {/* â”€â”€ Section: Job Details â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50/70 flex items-center gap-2">
-            <span className="text-base">📋</span>
-            <h2 className="text-sm font-semibold text-gray-700">Job Details</h2>
-          </div>
-
-          <div className="p-5 space-y-4">
-            {/* Title */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Title <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="title"
-                value={form.title}
-                onChange={handleChange}
-                placeholder="e.g. Need a plumber for a leaking kitchen tap in Glasgow"
-                className={inputClass('title')}
-              />
-              {errors.title && (
-                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
-                  <span>●</span> {errors.title}
-                </p>
-              )}
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                name="description"
-                value={form.description}
-                onChange={handleChange}
-                rows={4}
-                placeholder="Describe the problem in as much detail as possible — what's wrong, how urgent it is, any access notes…"
-                className={`${inputClass('description')} resize-none leading-relaxed`}
-              />
-              {errors.description && (
-                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
-                  <span>●</span> {errors.description}
-                </p>
-              )}
-            </div>
-
-            {/* Category */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Category</label>
-              <div className="flex flex-wrap gap-2">
-                {CATEGORIES.map(({ value, icon }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setForm((prev) => ({ ...prev, category: value }))}
-                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                      form.category === value
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                        : 'bg-white border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-700'
-                    }`}
-                  >
-                    {icon} {value}
-                  </button>
-                ))}
+              <div className="mt-8 grid gap-4">
+                <div className="rounded-3xl bg-white/80 px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '80ms' }}>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Be specific</p>
+                  <p className="mt-2 text-sm text-slate-600">Mention the issue, urgency, and exact location details.</p>
+                </div>
+                <div className="rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '140ms' }}>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-700">Choose a category</p>
+                  <p className="mt-2 text-sm text-slate-600">Good categorisation helps the right people find the job faster.</p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </section>
 
-        {/* â”€â”€ Section: Location & Contact â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50/70 flex items-center gap-2">
-            <span className="text-base">👤</span>
-            <h2 className="text-sm font-semibold text-gray-700">Location &amp; Contact</h2>
-          </div>
+          <section className="glass-panel px-6 py-6">
+            <p className="section-label mb-3">What good requests include</p>
+            <ul className="space-y-3 text-sm leading-7 text-slate-600">
+              <li>Clear title with the actual task or fault.</li>
+              <li>Short description explaining urgency and access details.</li>
+              <li>Location and contact information for follow-up.</li>
+            </ul>
+          </section>
+        </aside>
 
-          <div className="p-5 space-y-4">
-            {/* Location */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                📍 Location
-              </label>
-              <input
-                type="text"
-                name="location"
-                value={form.location}
-                onChange={handleChange}
-                placeholder="e.g. Glasgow, Edinburgh, London"
-                className={inputClass('location')}
-              />
+        <form onSubmit={handleSubmit} noValidate className="space-y-5">
+          {serverError && (
+            <div className="rounded-3xl border border-rose-200 bg-rose-50/90 px-4 py-4 text-sm text-rose-700 animate-fade-in">
+              {serverError}
+            </div>
+          )}
+
+          <div className="glass-panel overflow-hidden">
+            <div className="border-b border-slate-200/60 bg-white/50 px-6 py-4">
+              <p className="section-label mb-1">Job details</p>
+              <h2 className="text-lg font-bold text-slate-900">Describe the work</h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Name */}
+            <div className="space-y-5 px-6 py-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Your Name</label>
-                <input
-                  type="text"
-                  name="contactName"
-                  value={form.contactName}
-                  onChange={handleChange}
-                  placeholder="Jane Smith"
-                  className={inputClass('contactName')}
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Email Address
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                  Title <span className="text-rose-500">*</span>
                 </label>
                 <input
-                  type="email"
-                  name="contactEmail"
-                  value={form.contactEmail}
+                  type="text"
+                  name="title"
+                  value={form.title}
                   onChange={handleChange}
-                  placeholder="jane@example.com"
-                  className={inputClass('contactEmail')}
+                  placeholder="e.g. Need a plumber for a leaking kitchen tap in Glasgow"
+                  className={inputClass('title')}
                 />
-                {errors.contactEmail && (
-                  <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
-                    <span>●</span> {errors.contactEmail}
-                  </p>
-                )}
+                {errors.title && <p className="mt-2 text-xs text-rose-600">{errors.title}</p>}
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                  Description <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  rows={5}
+                  placeholder="Describe the problem in as much detail as possible. Mention what is wrong, how urgent it is, and any access notes."
+                  className={`${inputClass('description')} resize-none leading-relaxed`}
+                />
+                {errors.description && <p className="mt-2 text-xs text-rose-600">{errors.description}</p>}
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">Category</label>
+                <div className="flex flex-wrap gap-2">
+                  {CATEGORIES.map(({ value, icon }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setForm((prev) => ({ ...prev, category: value }))}
+                      className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
+                        form.category === value
+                          ? 'border-teal-700 bg-teal-700 text-white shadow-md'
+                          : 'border-slate-200 bg-white/70 text-slate-600 hover:border-teal-300 hover:text-teal-700'
+                      }`}
+                    >
+                      {icon} {value}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* â”€â”€ Submit â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className="flex gap-3 pt-1">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 active:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
-          >
-            {submitting ? (
-              <>
-                <span className="inline-block animate-spin">↻</span> Posting…
-              </>
-            ) : (
-              <>✓ Post Request</>
-            )}
-          </button>
-          <Link
-            href="/"
-            className="px-6 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-colors"
-          >
-            Cancel
-          </Link>
-        </div>
-      </form>
+          <div className="glass-panel overflow-hidden">
+            <div className="border-b border-slate-200/60 bg-white/50 px-6 py-4">
+              <p className="section-label mb-1">Contact</p>
+              <h2 className="text-lg font-bold text-slate-900">Help the right person reach you</h2>
+            </div>
+
+            <div className="space-y-5 px-6 py-6">
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">Location</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={form.location}
+                  onChange={handleChange}
+                  placeholder="e.g. Glasgow, Edinburgh, London"
+                  className={inputClass('location')}
+                />
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-slate-700">Your Name</label>
+                  <input
+                    type="text"
+                    name="contactName"
+                    value={form.contactName}
+                    onChange={handleChange}
+                    placeholder="Jane Smith"
+                    className={inputClass('contactName')}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-slate-700">Email Address</label>
+                  <input
+                    type="email"
+                    name="contactEmail"
+                    value={form.contactEmail}
+                    onChange={handleChange}
+                    placeholder="jane@example.com"
+                    className={inputClass('contactEmail')}
+                  />
+                  {errors.contactEmail && <p className="mt-2 text-xs text-rose-600">{errors.contactEmail}</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button type="submit" disabled={submitting} className="primary-button flex-1">
+              {submitting ? (
+                <>
+                  <span className="inline-block animate-spin">↻</span> Posting…
+                </>
+              ) : (
+                <>✓ Post Request</>
+              )}
+            </button>
+            <Link href="/" className="secondary-button sm:px-6">
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

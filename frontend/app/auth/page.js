@@ -71,30 +71,49 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="mx-auto max-w-5xl animate-fade-up">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors mb-4"
+        className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 shadow-sm transition hover:bg-white"
       >
         ← Back to jobs
       </Link>
 
-      <div className="rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-xl">
-        <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 px-6 py-8 text-white">
-          <p className="text-xs uppercase tracking-[0.25em] text-blue-200 font-semibold mb-2">Account</p>
-          <h1 className="text-3xl font-extrabold mb-2">{title}</h1>
-          <p className="text-sm text-blue-100">
-            Logged-in users can post new job requests and delete existing ones.
-          </p>
-        </div>
+      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <section className="glass-panel-strong relative overflow-hidden px-6 py-8 text-slate-900 sm:px-8 sm:py-10">
+          <div className="absolute -right-10 top-0 h-40 w-40 rounded-full bg-teal-200/40 blur-3xl" />
+          <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-amber-200/40 blur-3xl" />
+          <div className="relative">
+            <p className="section-label mb-3">Account access</p>
+            <h1 className="max-w-sm text-4xl font-extrabold leading-tight text-slate-900">{title}</h1>
+            <p className="mt-4 max-w-md text-sm leading-7 text-slate-600">
+              Save time with a cleaner return flow. Once signed in, you can post jobs, manage requests, and delete protected items securely.
+            </p>
 
-        <div className="p-6 space-y-5">
-          <div className="inline-flex rounded-xl bg-slate-100 p-1">
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-3xl bg-teal-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '60ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">Secure</p>
+                <p className="mt-2 text-sm text-slate-600">JWT-backed access for protected actions.</p>
+              </div>
+              <div className="rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '120ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Fast</p>
+                <p className="mt-2 text-sm text-slate-600">Return to the exact task you started.</p>
+              </div>
+              <div className="rounded-3xl bg-white px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '180ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Simple</p>
+                <p className="mt-2 text-sm text-slate-600">One screen for sign in and registration.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="glass-panel px-6 py-6 sm:px-8 sm:py-8">
+          <div className="inline-flex rounded-2xl bg-white/70 p-1.5 shadow-sm">
             <button
               type="button"
               onClick={() => setMode('login')}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                mode === 'login' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600'
+              className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
+                mode === 'login' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500'
               }`}
             >
               Sign In
@@ -102,8 +121,8 @@ export default function AuthPage() {
             <button
               type="button"
               onClick={() => setMode('register')}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                mode === 'register' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600'
+              className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
+                mode === 'register' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500'
               }`}
             >
               Register
@@ -111,59 +130,55 @@ export default function AuthPage() {
           </div>
 
           {error && (
-            <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div className="mt-5 rounded-3xl border border-rose-200 bg-rose-50/90 px-4 py-3 text-sm text-rose-700 animate-fade-in">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             {mode === 'register' && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Name</label>
+              <div className="animate-fade-in">
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">Name</label>
                 <input
                   type="text"
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="soft-input"
                   placeholder="Jane Smith"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
               <input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="soft-input"
                 placeholder="jane@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
               <input
                 type="password"
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="soft-input"
                 placeholder="At least 6 characters"
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full inline-flex justify-center items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:from-blue-700 hover:to-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
+            <button type="submit" disabled={submitting} className="primary-button w-full">
               {submitting ? 'Please wait…' : mode === 'login' ? 'Sign In' : 'Create Account'}
             </button>
           </form>
-        </div>
+        </section>
       </div>
     </div>
   );

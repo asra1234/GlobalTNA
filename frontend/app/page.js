@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+
 import { getJobs } from '../lib/api';
 
 const CATEGORIES = ['All', 'Plumbing', 'Electrical', 'Painting', 'Joinery', 'Other'];
@@ -35,7 +36,7 @@ const CATEGORY_ICONS = {
 };
 
 const STATUS_PILL_ACTIVE = {
-  All: 'bg-blue-600 text-white shadow-sm',
+  All: 'bg-slate-900 text-white shadow-sm',
   Open: 'bg-emerald-500 text-white shadow-sm',
   'In Progress': 'bg-amber-500 text-white shadow-sm',
   Closed: 'bg-slate-500 text-white shadow-sm',
@@ -43,18 +44,18 @@ const STATUS_PILL_ACTIVE = {
 
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-5 animate-pulse">
-      <div className="flex gap-2 mb-4">
-        <div className="h-6 w-16 bg-gray-200 rounded-full" />
-        <div className="h-6 w-20 bg-gray-100 rounded-full" />
+    <div className="glass-panel animate-pulse p-5">
+      <div className="mb-4 flex gap-2">
+        <div className="h-6 w-16 rounded-full bg-gray-200" />
+        <div className="h-6 w-20 rounded-full bg-gray-100" />
       </div>
-      <div className="h-5 bg-gray-200 rounded-lg mb-2 w-3/4" />
-      <div className="h-4 bg-gray-100 rounded-lg mb-1.5" />
-      <div className="h-4 bg-gray-100 rounded-lg mb-1.5 w-5/6" />
-      <div className="h-4 bg-gray-100 rounded-lg mb-4 w-2/3" />
-      <div className="flex justify-between pt-3 border-t border-gray-100">
-        <div className="h-3 w-24 bg-gray-100 rounded-lg" />
-        <div className="h-3 w-16 bg-gray-100 rounded-lg" />
+      <div className="mb-2 h-5 w-3/4 rounded-lg bg-gray-200" />
+      <div className="mb-1.5 h-4 rounded-lg bg-gray-100" />
+      <div className="mb-1.5 h-4 w-5/6 rounded-lg bg-gray-100" />
+      <div className="mb-4 h-4 w-2/3 rounded-lg bg-gray-100" />
+      <div className="flex justify-between border-t border-slate-200/60 pt-3">
+        <div className="h-3 w-24 rounded-lg bg-gray-100" />
+        <div className="h-3 w-16 rounded-lg bg-gray-100" />
       </div>
     </div>
   );
@@ -89,204 +90,209 @@ export default function HomePage() {
     loadJobs();
   }, [loadJobs]);
 
+  const openJobs = jobs.filter((job) => job.status === 'Open').length;
+  const activeAreas = new Set(jobs.map((job) => job.location).filter(Boolean)).size;
+
   return (
-    <div>
-      {/* â”€â”€ Hero banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 px-8 py-10 mb-8 text-white shadow-xl">
-        {/* decorative blobs */}
-        <div className="pointer-events-none absolute -top-16 -right-16 w-72 h-72 rounded-full bg-white/5" />
-        <div className="pointer-events-none absolute -bottom-12 -left-12 w-56 h-56 rounded-full bg-white/5" />
-
-        <div className="relative z-10 max-w-xl">
-          <p className="text-blue-200 text-sm font-medium uppercase tracking-widest mb-2">
-            Service Marketplace
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-3">
-            Find Trusted<br />Tradespeople
-          </h1>
-          <p className="text-blue-100 mb-6 leading-relaxed">
-            Post a job request in seconds and get connected with skilled local tradespeople — plumbers, electricians, painters, and more.
-          </p>
-          <Link
-            href="/jobs/new"
-            className="inline-flex items-center gap-2 bg-white text-blue-700 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-blue-50 transition-colors shadow-lg"
-          >
-            <span>＋</span> Post a Job Request
-          </Link>
+    <div className="space-y-8">
+      <section className="grid gap-6 lg:grid-cols-[1.14fr_0.86fr]">
+        <div className="glass-panel-strong relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10 animate-fade-up">
+          <div className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-teal-300/25 blur-3xl animate-drift" />
+          <div className="absolute bottom-0 left-0 h-36 w-36 rounded-full bg-amber-200/30 blur-3xl animate-soft-pulse" />
+          <div className="relative z-10 max-w-2xl">
+            <p className="section-label mb-3">Service marketplace</p>
+            <h1 className="text-4xl font-extrabold leading-[1.05] text-slate-900 sm:text-5xl">
+              Find reliable tradespeople without the messy back-and-forth.
+            </h1>
+            <p className="mt-5 max-w-xl text-[15px] leading-8 text-slate-600">
+              Post a request, filter live opportunities, and keep the whole process calm, clear, and easy to scan.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="/jobs/new" className="primary-button animate-sheen">
+                ＋ Post a Job Request
+              </Link>
+              <a href="#job-board" className="secondary-button">
+                Explore the Job Board
+              </a>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-3xl bg-white/85 px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '60ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Live filters</p>
+                <p className="mt-2 text-sm text-slate-600">Search by keywords, category, and status in one place.</p>
+              </div>
+              <div className="rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '120ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-700">Fast posting</p>
+                <p className="mt-2 text-sm text-slate-600">Create polished job requests in a guided workflow.</p>
+              </div>
+              <div className="rounded-3xl bg-teal-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '180ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Secure actions</p>
+                <p className="mt-2 text-sm text-slate-600">Authenticated posting and deletion with cleaner control.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* â”€â”€ Filters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-6 space-y-4">
-        <div>
-          <label
-            htmlFor="job-keyword-search"
-            className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2.5 block"
-          >
-            Keyword Search
-          </label>
-          <div className="relative">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              Search
-            </span>
+        <div className="glass-panel flex flex-col justify-between px-6 py-6 animate-fade-up" style={{ animationDelay: '100ms' }}>
+          <div>
+            <p className="section-label mb-3">At a glance</p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <div className="rounded-3xl bg-white/80 px-5 py-5 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Open requests</p>
+                <p className="mt-3 text-4xl font-extrabold text-slate-900">{openJobs}</p>
+                <p className="mt-2 text-sm text-slate-500">Fresh work currently waiting for responses.</p>
+              </div>
+              <div className="rounded-3xl bg-gradient-to-br from-teal-700 to-slate-900 px-5 py-5 text-white shadow-lg">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-100/80">Coverage</p>
+                <p className="mt-3 text-3xl font-extrabold">{activeAreas || 0} areas</p>
+                <p className="mt-2 text-sm text-teal-50/80">Locations represented on the current board.</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-5 rounded-3xl bg-amber-50 px-5 py-5 text-sm leading-7 text-slate-600">
+            Tip: start with keyword search, then narrow with category and status to get to the right request quickly.
+          </div>
+        </div>
+      </section>
+
+      <section id="job-board" className="glass-panel px-5 py-5 sm:px-6 sm:py-6 animate-fade-up" style={{ animationDelay: '140ms' }}>
+        <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+          <div>
+            <label htmlFor="job-keyword-search" className="section-label mb-2 block">
+              Keyword Search
+            </label>
             <input
               id="job-keyword-search"
               type="search"
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search job title or description"
-              className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-20 pr-4 text-sm text-gray-700 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              placeholder="Search title or description"
+              className="soft-input"
             />
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
+            <div>
+              <p className="section-label mb-2">Status</p>
+              <div className="flex flex-wrap gap-2">
+                {STATUSES.map((status) => (
+                  <button
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                    className={`rounded-full border px-3.5 py-2 text-sm font-semibold transition-all ${
+                      statusFilter === status
+                        ? STATUS_PILL_ACTIVE[status]
+                        : 'border-slate-200 bg-white/75 text-slate-600 hover:border-teal-300 hover:text-teal-700'
+                    }`}
+                  >
+                    {status !== 'All' && (
+                      <span className={`mr-2 inline-block h-2 w-2 rounded-full ${STATUS_DOT[status] || 'bg-gray-400'}`} />
+                    )}
+                    {status}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button onClick={loadJobs} disabled={loading} className="secondary-button self-end whitespace-nowrap">
+              <span className={loading ? 'inline-block animate-spin' : ''}>↻</span> Refresh
+            </button>
           </div>
         </div>
 
-        {/* Category pills */}
-        <div>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2.5">
-            Category
-          </p>
+        <div className="mt-5">
+          <p className="section-label mb-2">Category</p>
           <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((c) => (
+            {CATEGORIES.map((category) => (
               <button
-                key={c}
-                onClick={() => setCategoryFilter(c)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  categoryFilter === c
-                    ? (STATUS_PILL_ACTIVE.All)   // reuse blue for category active
-                      .replace('bg-blue-600', 'bg-blue-600') + ''
-                    : 'bg-gray-50 border border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-700'
-                } ${categoryFilter === c ? 'bg-blue-600 text-white shadow-sm' : ''}`}
+                key={category}
+                onClick={() => setCategoryFilter(category)}
+                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
+                  categoryFilter === category
+                    ? 'border-teal-700 bg-teal-700 text-white shadow-md'
+                    : 'border-slate-200 bg-white/75 text-slate-600 hover:border-teal-300 hover:text-teal-700'
+                }`}
               >
-                <span>{CATEGORY_ICONS[c]}</span>
-                <span>{c === 'All' ? 'All' : c}</span>
+                <span className="mr-2">{CATEGORY_ICONS[category]}</span>
+                {category}
               </button>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Status pills + refresh */}
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2.5">
-              Status
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {STATUSES.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setStatusFilter(s)}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    statusFilter === s
-                      ? STATUS_PILL_ACTIVE[s]
-                      : 'bg-gray-50 border border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-700'
-                  }`}
-                >
-                  {s !== 'All' && (
-                    <span className={`w-2 h-2 rounded-full ${STATUS_DOT[s] || 'bg-gray-400'}`} />
-                  )}
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <button
-            onClick={loadJobs}
-            disabled={loading}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors font-medium text-gray-600 disabled:opacity-50"
-          >
-            <span className={loading ? 'animate-spin inline-block' : ''}>↻</span> Refresh
-          </button>
-        </div>
-      </div>
-
-      {/* â”€â”€ Error â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {!loading && error && (
-        <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3.5 rounded-2xl mb-6">
-          <span className="text-lg">⚠️</span>
-          <p className="text-sm">{error}</p>
+        <div className="rounded-3xl border border-rose-200 bg-rose-50/90 px-4 py-4 text-sm text-rose-700 animate-fade-in">
+          {error}
         </div>
       )}
 
-      {/* â”€â”€ Loading: skeleton grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {loading && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <SkeletonCard key={i} />
+          {Array.from({ length: 6 }).map((_, index) => (
+            <SkeletonCard key={index} />
           ))}
         </div>
       )}
 
-      {/* â”€â”€ Empty state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {!loading && !error && jobs.length === 0 && (
-        <div className="text-center py-20">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50 text-4xl mb-5">
+        <div className="glass-panel py-16 text-center animate-fade-up">
+          <div className="mb-5 inline-flex h-20 w-20 items-center justify-center rounded-full bg-teal-50 text-4xl animate-soft-pulse">
             📋
           </div>
-          <h2 className="text-xl font-bold text-gray-700 mb-2">No job requests found</h2>
-          <p className="text-sm text-gray-400 mb-7">
+          <h2 className="mb-2 text-2xl font-bold text-slate-800">No job requests found</h2>
+          <p className="mx-auto mb-7 max-w-md text-sm leading-7 text-slate-500">
             Try adjusting your filters or search terms, or be the first to post a request.
           </p>
-          <Link
-            href="/jobs/new"
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-md"
-          >
-            <span>＋</span> Post a Job
+          <Link href="/jobs/new" className="primary-button">
+            ＋ Post a Job
           </Link>
         </div>
       )}
 
-      {/* â”€â”€ Job cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {!loading && !error && jobs.length > 0 && (
         <>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
+          <p className="section-label mb-4">
             {jobs.length} request{jobs.length !== 1 ? 's' : ''} found
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {jobs.map((job, i) => (
+            {jobs.map((job, index) => (
               <Link
                 key={job._id}
                 href={`/jobs/${job._id}`}
                 className="group block animate-fade-in"
-                style={{ animationDelay: `${i * 40}ms` }}
+                style={{ animationDelay: `${index * 40}ms` }}
               >
                 <div
-                  className={`bg-white rounded-2xl border border-gray-100 border-l-4 ${
+                  className={`glass-panel border-l-4 h-full p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] ${
                     STATUS_LEFT[job.status] || 'border-l-gray-300'
-                  } p-5 h-full flex flex-col shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200`}
+                  }`}
                 >
-                  {/* Badges */}
-                  <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  <div className="mb-3 flex flex-wrap items-center gap-2">
                     <span
-                      className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full ${
+                      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
                         STATUS_BADGE[job.status] || 'bg-gray-100 text-gray-500'
                       }`}
                     >
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full ${STATUS_DOT[job.status] || 'bg-gray-400'}`}
-                      />
+                      <span className={`h-1.5 w-1.5 rounded-full ${STATUS_DOT[job.status] || 'bg-gray-400'}`} />
                       {job.status}
                     </span>
                     {job.category && (
-                      <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
+                      <span className="rounded-full bg-white/80 px-2.5 py-1 text-xs text-slate-500 shadow-sm">
                         {CATEGORY_ICONS[job.category]} {job.category}
                       </span>
                     )}
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors leading-snug">
+                  <h3 className="mb-2 line-clamp-2 text-lg font-bold leading-snug text-slate-900 transition-colors group-hover:text-teal-700">
                     {job.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-sm text-gray-500 mb-4 line-clamp-3 flex-1 leading-relaxed">
+                  <p className="mb-4 line-clamp-3 text-sm leading-7 text-slate-500">
                     {job.description}
                   </p>
 
-                  {/* Footer */}
-                  <div className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100">
-                    <span className="flex items-center gap-1">
+                  <div className="flex items-center justify-between border-t border-slate-200/60 pt-3 text-xs text-slate-400">
+                    <span className="flex items-center gap-1.5">
                       <span>📍</span>
                       {job.location || 'Location not set'}
                     </span>

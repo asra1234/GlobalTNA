@@ -119,11 +119,11 @@ export default function JobDetailPage() {
   // â”€â”€ Loading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (loading) {
     return (
-      <div className="max-w-2xl mx-auto">
-        <div className="h-4 w-24 bg-gray-200 rounded-lg animate-pulse mb-6" />
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden animate-pulse">
-          <div className="h-24 bg-gray-200" />
-          <div className="p-6 space-y-3">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-6 h-10 w-36 rounded-full bg-white/70 animate-pulse" />
+        <div className="glass-panel overflow-hidden animate-pulse">
+          <div className="h-32 bg-slate-200/70" />
+          <div className="space-y-3 p-6">
             <div className="h-7 bg-gray-200 rounded-lg w-3/4" />
             <div className="h-4 bg-gray-100 rounded-lg" />
             <div className="h-4 bg-gray-100 rounded-lg w-5/6" />
@@ -136,11 +136,11 @@ export default function JobDetailPage() {
   // â”€â”€ Error â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (error) {
     return (
-      <div className="max-w-2xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors mb-4">
+      <div className="mx-auto max-w-3xl animate-fade-up">
+        <Link href="/" className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 shadow-sm transition hover:bg-white">
           ← Back to jobs
         </Link>
-        <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-4 rounded-2xl">
+        <div className="glass-panel flex items-start gap-3 border-rose-200 bg-rose-50/80 px-4 py-4 text-rose-700">
           <span className="text-xl">⚠️</span>
           <div>
             <p className="font-semibold mb-0.5">Not Found</p>
@@ -153,101 +153,95 @@ export default function JobDetailPage() {
 
   const headerGradient = STATUS_HEADER_GRADIENT[job.status] || 'from-blue-600 to-indigo-700';
 
-  // â”€â”€ Detail â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
-    <div className="max-w-2xl mx-auto animate-fade-in">
+    <div className="mx-auto max-w-5xl animate-fade-up">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors mb-5"
+        className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 shadow-sm transition hover:bg-white"
       >
         ← Back to jobs
       </Link>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        {/* â”€â”€ Status-coloured header bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className={`bg-gradient-to-r ${headerGradient} px-6 py-5 text-white`}>
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span
-              className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1 rounded-full border border-white/30"
-            >
-              <span className={`w-2 h-2 rounded-full bg-white`} />
-              {job.status}
-            </span>
-            {job.category && (
-              <span className="text-sm bg-white/15 px-3 py-1 rounded-full border border-white/20">
-                {CATEGORY_ICONS[job.category]} {job.category}
+      <div className="grid gap-6 lg:grid-cols-[1.18fr_0.82fr]">
+        <section className="glass-panel overflow-hidden">
+          <div className={`relative overflow-hidden bg-gradient-to-r ${headerGradient} px-6 py-6 text-white sm:px-8`}>
+            <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <span
+                className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1 rounded-full border border-white/30"
+              >
+                <span className={`w-2 h-2 rounded-full bg-white`} />
+                {job.status}
               </span>
-            )}
-            <span className="ml-auto text-xs opacity-75">
-              Posted {new Date(job.createdAt).toLocaleDateString('en-GB', {
-                day: 'numeric', month: 'short', year: 'numeric',
-              })}
-            </span>
+              {job.category && (
+                <span className="text-sm bg-white/15 px-3 py-1 rounded-full border border-white/20">
+                  {CATEGORY_ICONS[job.category]} {job.category}
+                </span>
+              )}
+              <span className="ml-auto text-xs opacity-75">
+                Posted {new Date(job.createdAt).toLocaleDateString('en-GB', {
+                  day: 'numeric', month: 'short', year: 'numeric',
+                })}
+              </span>
+            </div>
+            <h1 className="max-w-2xl text-3xl font-extrabold leading-tight">{job.title}</h1>
           </div>
-          <h1 className="text-xl font-extrabold leading-snug">{job.title}</h1>
-        </div>
 
-        {/* â”€â”€ Description â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className="px-6 py-5 border-b border-gray-100">
-          <p className="text-gray-700 leading-relaxed text-sm">{job.description}</p>
-        </div>
-
-        {/* â”€â”€ Info grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        {(job.location || job.contactName || job.contactEmail) && (
-          <div className="px-6 py-4 bg-slate-50/60 border-b border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {job.location && (
-              <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-                  Location
-                </p>
-                <p className="text-sm font-medium text-gray-800 flex items-center gap-1.5">
-                  📍 {job.location}
-                </p>
-              </div>
-            )}
-            {job.contactName && (
-              <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-                  Contact
-                </p>
-                <p className="text-sm font-medium text-gray-800">👤 {job.contactName}</p>
-              </div>
-            )}
-            {job.contactEmail && (
-              <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-                  Email
-                </p>
-                <a
-                  href={`mailto:${job.contactEmail}`}
-                  className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline break-all flex items-center gap-1.5"
-                >
-                  ✉️ {job.contactEmail}
-                </a>
-              </div>
-            )}
+          <div className="border-b border-slate-200/60 px-6 py-6 sm:px-8">
+            <p className="section-label mb-3">Overview</p>
+            <p className="text-[15px] leading-8 text-slate-600">{job.description}</p>
           </div>
-        )}
 
-        {/* â”€â”€ Actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-        <div className="px-6 py-5 space-y-5">
-          {actionError && (
-            <div className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-600 px-3.5 py-3 rounded-xl text-sm">
-              <span>⚠️</span> {actionError}
+          {(job.location || job.contactName || job.contactEmail) && (
+            <div className="grid grid-cols-1 gap-4 border-b border-slate-200/60 bg-white/45 px-6 py-5 sm:grid-cols-3 sm:px-8">
+              {job.location && (
+                <div className="rounded-3xl bg-white/70 px-4 py-4 shadow-sm">
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+                    Location
+                  </p>
+                  <p className="flex items-center gap-1.5 text-sm font-medium text-slate-800">
+                    📍 {job.location}
+                  </p>
+                </div>
+              )}
+              {job.contactName && (
+                <div className="rounded-3xl bg-white/70 px-4 py-4 shadow-sm">
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+                    Contact
+                  </p>
+                  <p className="text-sm font-medium text-slate-800">👤 {job.contactName}</p>
+                </div>
+              )}
+              {job.contactEmail && (
+                <div className="rounded-3xl bg-white/70 px-4 py-4 shadow-sm">
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+                    Email
+                  </p>
+                  <a
+                    href={`mailto:${job.contactEmail}`}
+                    className="flex items-center gap-1.5 break-all text-sm font-medium text-teal-700 hover:text-teal-900 hover:underline"
+                  >
+                    ✉️ {job.contactEmail}
+                  </a>
+                </div>
+              )}
             </div>
           )}
 
-          {justUpdated && (
-            <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3.5 py-3 rounded-xl text-sm animate-fade-in">
-              <span>✓</span> Status updated successfully
-            </div>
-          )}
+          <div className="px-6 py-6 sm:px-8">
+            <p className="section-label mb-3">Status controls</p>
+            {actionError && (
+              <div className="mb-4 rounded-3xl border border-rose-200 bg-rose-50/90 px-4 py-3 text-sm text-rose-700 animate-fade-in">
+                {actionError}
+              </div>
+            )}
 
-          {/* Status buttons */}
-          <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-              Update Status
-            </p>
+            {justUpdated && (
+              <div className="mb-4 rounded-3xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 text-sm text-emerald-700 animate-fade-in">
+                Status updated successfully
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-2">
               {STATUSES.map((status) => {
                 const isCurrent = job.status === status;
@@ -256,34 +250,49 @@ export default function JobDetailPage() {
                     key={status}
                     onClick={() => handleStatusChange(status)}
                     disabled={isCurrent || updating}
-                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all disabled:cursor-not-allowed ${
+                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all disabled:cursor-not-allowed ${
                       isCurrent
                         ? STATUS_BUTTON_ACTIVE[status]
-                        : `${STATUS_BUTTON_IDLE[status]} disabled:opacity-40`
+                        : `${STATUS_BUTTON_IDLE[status]} disabled:opacity-40 bg-white/75`
                     }`}
                   >
-                    <span className={`w-2 h-2 rounded-full ${STATUS_DOT[status]}`} />
+                    <span className={`h-2 w-2 rounded-full ${STATUS_DOT[status]}`} />
                     {status}
-                    {isCurrent && <span className="text-xs opacity-75">(current)</span>}
                   </button>
                 );
               })}
               {updating && (
-                <span className="self-center text-xs text-gray-400 flex items-center gap-1.5">
+                <span className="self-center text-xs text-slate-400">
                   <span className="inline-block animate-spin">↻</span> Saving…
                 </span>
               )}
             </div>
           </div>
+        </section>
 
-          {/* Delete */}
-          <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-            <p className="text-xs text-gray-400">Permanent action — cannot be undone.</p>
+        <aside className="space-y-6">
+          <section className="glass-panel px-6 py-6">
+            <p className="section-label mb-3">Snapshot</p>
+            <div className="space-y-4">
+              <div className="rounded-3xl bg-white/80 px-4 py-4 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Current status</p>
+                <p className="mt-2 text-lg font-bold text-slate-900">{job.status}</p>
+              </div>
+              <div className="rounded-3xl bg-teal-50 px-4 py-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Category</p>
+                <p className="mt-2 text-lg font-bold text-slate-900">{job.category || 'Unassigned'}</p>
+              </div>
+            </div>
+          </section>
+
+          <section className="glass-panel px-6 py-6">
+            <p className="section-label mb-3">Danger zone</p>
+            <p className="mb-4 text-sm leading-7 text-slate-500">Deleting a request removes it permanently from the marketplace.</p>
             {auth ? (
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:border-red-400 active:bg-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {deleting ? (
                   <><span className="inline-block animate-spin">↻</span> Deleting…</>
@@ -294,13 +303,13 @@ export default function JobDetailPage() {
             ) : (
               <Link
                 href={`/auth?next=/jobs/${params.id}`}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-all"
+                className="secondary-button w-full"
               >
                 Sign in to delete
               </Link>
             )}
-          </div>
-        </div>
+          </section>
+        </aside>
       </div>
     </div>
   );
