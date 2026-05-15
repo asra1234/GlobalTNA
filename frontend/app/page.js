@@ -66,6 +66,7 @@ export default function HomePage() {
   const [error, setError] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const loadJobs = useCallback(async () => {
     setLoading(true);
@@ -74,6 +75,7 @@ export default function HomePage() {
       const filters = {};
       if (categoryFilter !== 'All') filters.category = categoryFilter;
       if (statusFilter !== 'All') filters.status = statusFilter;
+      if (searchTerm.trim()) filters.q = searchTerm.trim();
       const data = await getJobs(filters);
       setJobs(data);
     } catch {
@@ -81,7 +83,7 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
-  }, [categoryFilter, statusFilter]);
+  }, [categoryFilter, searchTerm, statusFilter]);
 
   useEffect(() => {
     loadJobs();
@@ -116,6 +118,28 @@ export default function HomePage() {
 
       {/* â”€â”€ Filters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-6 space-y-4">
+        <div>
+          <label
+            htmlFor="job-keyword-search"
+            className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2.5 block"
+          >
+            Keyword Search
+          </label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+              Search
+            </span>
+            <input
+              id="job-keyword-search"
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search job title or description"
+              className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-20 pr-4 text-sm text-gray-700 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+        </div>
+
         {/* Category pills */}
         <div>
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2.5">
@@ -201,7 +225,7 @@ export default function HomePage() {
           </div>
           <h2 className="text-xl font-bold text-gray-700 mb-2">No job requests found</h2>
           <p className="text-sm text-gray-400 mb-7">
-            Try adjusting your filters, or be the first to post a request.
+            Try adjusting your filters or search terms, or be the first to post a request.
           </p>
           <Link
             href="/jobs/new"

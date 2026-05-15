@@ -12,6 +12,7 @@ export async function getJobs(filters = {}) {
   const params = new URLSearchParams();
   if (filters.category) params.set('category', filters.category);
   if (filters.status) params.set('status', filters.status);
+  if (filters.q) params.set('q', filters.q);
 
   const res = await fetch(`${API_URL}/api/jobs?${params.toString()}`, { cache: 'no-store' });
   return handleResponse(res);

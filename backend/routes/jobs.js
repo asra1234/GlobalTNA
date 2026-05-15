@@ -5,6 +5,10 @@ const JobRequest = require('../models/JobRequest');
 const VALID_CATEGORIES = ['Plumbing', 'Electrical', 'Painting', 'Joinery', 'Other'];
 const VALID_STATUSES = ['Open', 'In Progress', 'Closed'];
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 // GET /api/jobs — list all jobs; optional ?category=Plumbing&status=Open
 router.get('/', async (req, res, next) => {
   try {
@@ -20,6 +24,13 @@ router.get('/', async (req, res, next) => {
         return res.status(400).json({ message: `Invalid status. Must be one of: ${VALID_STATUSES.join(', ')}` });
       }
       filter.status = req.query.status;
+    }
+    if (req.query.q) {
+      const keyword = String(req.query.q).trim();
+      if (keyword) {
+        const pattern = new RegExp(escapeRegex(keyword), 'i');
+        filter.$or = [{ title: pattern }, { description: pattern }];
+      }
     }
 
     const jobs = await JobRequest.find(filter).sort({ createdAt: -1 });
