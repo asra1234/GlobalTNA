@@ -1,4 +1,12 @@
+import { getAuthToken } from './auth';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+function buildAuthHeaders() {
+  const token = getAuthToken();
+
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 async function handleResponse(res) {
   const data = await res.json();
@@ -26,7 +34,7 @@ export async function getJob(id) {
 export async function createJob(data) {
   const res = await fetch(`${API_URL}/api/jobs`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...buildAuthHeaders() },
     body: JSON.stringify(data),
   });
   return handleResponse(res);
@@ -44,6 +52,25 @@ export async function updateJobStatus(id, status) {
 export async function deleteJob(id) {
   const res = await fetch(`${API_URL}/api/jobs/${id}`, {
     method: 'DELETE',
+    headers: buildAuthHeaders(),
+  });
+  return handleResponse(res);
+}
+
+export async function registerUser(data) {
+  const res = await fetch(`${API_URL}/api/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  return handleResponse(res);
+}
+
+export async function loginUser(data) {
+  const res = await fetch(`${API_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
   });
   return handleResponse(res);
 }

@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createJob } from '../../../lib/api';
+import { getStoredAuth } from '../../../lib/auth';
 
 const CATEGORIES = [
   { value: 'Plumbing', icon: '🔧' },
@@ -30,6 +31,24 @@ export default function NewJobPage() {
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [auth, setAuth] = useState(null);
+
+  useEffect(() => {
+    const syncAuth = () => {
+      setAuth(getStoredAuth());
+      setAuthChecked(true);
+    };
+
+    syncAuth();
+    window.addEventListener('storage', syncAuth);
+    window.addEventListener('auth-change', syncAuth);
+
+    return () => {
+      window.removeEventListener('storage', syncAuth);
+      window.removeEventListener('auth-change', syncAuth);
+    };
+  }, []);
 
   const validate = () => {
     const e = {};
@@ -71,6 +90,37 @@ export default function NewJobPage() {
   const inputClass = (field) =>
     `${inputBase} ${errors[field] ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-white'}`;
 
+  if (authChecked && !auth) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors mb-4"
+        >
+          ← Back to jobs
+        </Link>
+
+        <div className="rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-xl">
+          <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 px-6 py-8 text-white">
+            <p className="text-xs uppercase tracking-[0.25em] text-blue-200 font-semibold mb-2">Authentication</p>
+            <h1 className="text-3xl font-extrabold mb-2">Sign in to post a job</h1>
+            <p className="text-sm text-blue-100">
+              Posting requests is restricted to authenticated users.
+            </p>
+          </div>
+          <div className="p-6">
+            <Link
+              href="/auth?next=/jobs/new"
+              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-colors"
+            >
+              Sign In or Register
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto">
       {/* â”€â”€ Page header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
@@ -90,7 +140,9 @@ export default function NewJobPage() {
             </p>
             <h1 className="text-2xl font-extrabold mb-1">Post a Service Request</h1>
             <p className="text-blue-100 text-sm">
-              Describe what you need done and we&apos;ll connect you with the right tradesperson.
+              {auth?.user?.name
+                ? `Signed in as ${auth.user.name}. Describe what you need done and we&apos;ll connect you with the right tradesperson.`
+                : 'Describe what you need done and we&apos;ll connect you with the right tradesperson.'}
             </p>
           </div>
         </div>

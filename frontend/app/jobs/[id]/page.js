@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getJob, updateJobStatus, deleteJob } from '../../../lib/api';
+import { getStoredAuth } from '../../../lib/auth';
 
 const STATUSES = ['Open', 'In Progress', 'Closed'];
 
@@ -56,6 +57,7 @@ export default function JobDetailPage() {
   const [deleting, setDeleting] = useState(false);
   const [actionError, setActionError] = useState('');
   const [justUpdated, setJustUpdated] = useState(false);
+  const [auth, setAuth] = useState(null);
 
   useEffect(() => {
     async function load() {
@@ -70,6 +72,19 @@ export default function JobDetailPage() {
     }
     load();
   }, [params.id]);
+
+  useEffect(() => {
+    const syncAuth = () => setAuth(getStoredAuth());
+
+    syncAuth();
+    window.addEventListener('storage', syncAuth);
+    window.addEventListener('auth-change', syncAuth);
+
+    return () => {
+      window.removeEventListener('storage', syncAuth);
+      window.removeEventListener('auth-change', syncAuth);
+    };
+  }, []);
 
   const handleStatusChange = async (newStatus) => {
     if (newStatus === job.status || updating) return;
@@ -264,17 +279,26 @@ export default function JobDetailPage() {
           {/* Delete */}
           <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
             <p className="text-xs text-gray-400">Permanent action — cannot be undone.</p>
-            <button
-              onClick={handleDelete}
-              disabled={deleting}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:border-red-400 active:bg-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {deleting ? (
-                <><span className="inline-block animate-spin">↻</span> Deleting…</>
-              ) : (
-                <>🗑 Delete Request</>
-              )}
-            </button>
+            {auth ? (
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:border-red-400 active:bg-red-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {deleting ? (
+                  <><span className="inline-block animate-spin">↻</span> Deleting…</>
+                ) : (
+                  <>🗑 Delete Request</>
+                )}
+              </button>
+            ) : (
+              <Link
+                href={`/auth?next=/jobs/${params.id}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-all"
+              >
+                Sign in to delete
+              </Link>
+            )}
           </div>
         </div>
       </div>
