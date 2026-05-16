@@ -23,7 +23,15 @@ export default function AuthPage() {
   }, []);
 
   const title = useMemo(
-    () => (mode === 'login' ? 'Sign in to continue' : 'Create your account'),
+    () => (mode === 'login' ? 'Welcome back' : 'Create your account'),
+    [mode]
+  );
+
+  const subtitle = useMemo(
+    () =>
+      mode === 'login'
+        ? 'Sign in to post, manage, and track jobs.'
+        : 'Join in a minute and start managing jobs with less friction.',
     [mode]
   );
 
@@ -76,7 +84,7 @@ export default function AuthPage() {
         href="/"
         className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 shadow-sm transition hover:bg-white"
       >
-        ← Back to jobs
+        ← Back home
       </Link>
 
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
@@ -84,30 +92,41 @@ export default function AuthPage() {
           <div className="absolute -right-10 top-0 h-40 w-40 rounded-full bg-teal-200/40 blur-3xl" />
           <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-amber-200/40 blur-3xl" />
           <div className="relative">
-            <p className="section-label mb-3">Account access</p>
-            <h1 className="max-w-sm text-4xl font-extrabold leading-tight text-slate-900">{title}</h1>
-            <p className="mt-4 max-w-md text-sm leading-7 text-slate-600">
-              Save time with a cleaner return flow. Once signed in, you can post jobs, manage requests, and delete protected items securely.
+            <p className="section-label mb-3">Account</p>
+            <h1 className="font-display max-w-md text-4xl font-semibold leading-tight text-slate-900 sm:text-[2.8rem]">{title}</h1>
+            <p className="mt-4 max-w-md text-sm leading-7 text-slate-600 sm:text-base">
+              {subtitle}
             </p>
 
+            <div className="mt-6 inline-flex rounded-full border border-white/70 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-teal-700 shadow-sm">
+              Fast, secure access
+            </div>
+
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-3xl bg-teal-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '60ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">Secure</p>
-                <p className="mt-2 text-sm text-slate-600">JWT-backed access for protected actions.</p>
+              <div className="motion-card rounded-3xl bg-white/85 px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '60ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">Quick</p>
+                <p className="mt-2 text-sm text-slate-600">Get in and continue where you left off.</p>
               </div>
-              <div className="rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '120ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Fast</p>
-                <p className="mt-2 text-sm text-slate-600">Return to the exact task you started.</p>
+              <div className="motion-card rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '120ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Clear</p>
+                <p className="mt-2 text-sm text-slate-600">One simple screen for sign in and sign up.</p>
               </div>
-              <div className="rounded-3xl bg-white px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '180ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Simple</p>
-                <p className="mt-2 text-sm text-slate-600">One screen for sign in and registration.</p>
+              <div className="motion-card rounded-3xl bg-gradient-to-br from-teal-700 to-slate-900 px-4 py-4 text-white shadow-sm animate-fade-up" style={{ animationDelay: '180ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-100">Safe</p>
+                <p className="mt-2 text-sm text-teal-50/90">Protected actions stay tied to your account.</p>
               </div>
             </div>
           </div>
         </section>
 
         <section className="glass-panel px-6 py-6 sm:px-8 sm:py-8">
+          <div className="mb-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">{mode === 'login' ? 'Sign in' : 'Sign up'}</p>
+            <p className="mt-2 text-sm leading-6 text-slate-500">
+              {mode === 'login' ? 'Use your email and password.' : 'Just a few details to get started.'}
+            </p>
+          </div>
+
           <div className="inline-flex rounded-2xl bg-white/70 p-1.5 shadow-sm">
             <button
               type="button"
@@ -125,7 +144,7 @@ export default function AuthPage() {
                 mode === 'register' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500'
               }`}
             >
-              Register
+              Sign Up
             </button>
           </div>
 
@@ -138,7 +157,7 @@ export default function AuthPage() {
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             {mode === 'register' && (
               <div className="animate-fade-in">
-                <label className="mb-1.5 block text-sm font-medium text-slate-700">Name</label>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700">Full name</label>
                 <input
                   type="text"
                   name="name"
@@ -175,9 +194,20 @@ export default function AuthPage() {
             </div>
 
             <button type="submit" disabled={submitting} className="primary-button w-full">
-              {submitting ? 'Please wait…' : mode === 'login' ? 'Sign In' : 'Create Account'}
+              {submitting ? 'Please wait…' : mode === 'login' ? 'Continue' : 'Create account'}
             </button>
           </form>
+
+          <p className="mt-5 text-center text-sm text-slate-500">
+            {mode === 'login' ? 'Need an account?' : 'Already have an account?'}{' '}
+            <button
+              type="button"
+              onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
+              className="font-semibold text-teal-700 transition hover:text-teal-800"
+            >
+              {mode === 'login' ? 'Sign up' : 'Sign in'}
+            </button>
+          </p>
         </section>
       </div>
     </div>

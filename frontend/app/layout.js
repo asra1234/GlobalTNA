@@ -1,10 +1,20 @@
 import './globals.css';
-import { Manrope } from 'next/font/google';
+import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google';
 import Link from 'next/link';
 
 import AuthNav from '../components/AuthNav';
 
-const manrope = Manrope({ subsets: ['latin'], display: 'swap' });
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-display',
+});
 
 export const metadata = {
   title: 'GlobalTNA – Service Requests',
@@ -14,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${manrope.className} min-h-screen text-gray-900 antialiased`}>
+      <body className={`${plusJakartaSans.className} ${fraunces.variable} min-h-screen text-gray-900 antialiased`}>
         <div className="pointer-events-none fixed inset-0 overflow-hidden">
           <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-teal-300/20 blur-3xl animate-drift" />
           <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-amber-300/20 blur-3xl animate-soft-pulse" />

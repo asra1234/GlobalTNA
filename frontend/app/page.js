@@ -90,71 +90,59 @@ export default function HomePage() {
     loadJobs();
   }, [loadJobs]);
 
-  const openJobs = jobs.filter((job) => job.status === 'Open').length;
-  const activeAreas = new Set(jobs.map((job) => job.location).filter(Boolean)).size;
-
   return (
     <div className="space-y-8">
-      <section className="grid gap-6 lg:grid-cols-[1.14fr_0.86fr]">
-        <div className="glass-panel-strong relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10 animate-fade-up">
+      <section className="w-full">
+        <div className="glass-panel-strong motion-card animate-fade-up relative w-full overflow-hidden px-6 py-8 sm:px-8 sm:py-10">
           <div className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-teal-300/25 blur-3xl animate-drift" />
           <div className="absolute bottom-0 left-0 h-36 w-36 rounded-full bg-amber-200/30 blur-3xl animate-soft-pulse" />
-          <div className="relative z-10 max-w-2xl">
-            <p className="section-label mb-3">Service marketplace</p>
-            <h1 className="text-4xl font-extrabold leading-[1.05] text-slate-900 sm:text-5xl">
-              Find reliable tradespeople without the messy back-and-forth.
+          <div className="absolute right-6 top-6 hidden rounded-full border border-white/70 bg-white/80 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-700 shadow-lg backdrop-blur md:inline-flex animate-bob">
+            Trusted local professionals
+          </div>
+          <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center">
+            <p className="section-label mb-3">Home services, made simple</p>
+            <h1 className="font-display text-4xl font-semibold leading-[1.02] text-slate-900 sm:text-5xl lg:text-[3.45rem]">
+              Post a job in minutes and connect with trusted tradespeople near you.
             </h1>
-            <p className="mt-5 max-w-xl text-[15px] leading-8 text-slate-600">
-              Post a request, filter live opportunities, and keep the whole process calm, clear, and easy to scan.
+            <p className="mt-5 max-w-3xl text-[15px] leading-8 text-slate-600 sm:text-base">
+              GlobalTNA gives homeowners a clearer way to describe the work, browse active requests, and move from first post to first reply without friction.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-2 text-sm font-medium text-slate-600 animate-fade-up stagger-in" style={{ '--delay': '90ms' }}>
+              <span className="rounded-full bg-white/80 px-3 py-1.5 shadow-sm">Fast to post</span>
+              <span className="rounded-full bg-white/70 px-3 py-1.5 shadow-sm">Easy to browse</span>
+              <span className="rounded-full bg-white/70 px-3 py-1.5 shadow-sm">Built for local jobs</span>
+            </div>
+            <div className="mt-7 flex flex-wrap justify-center gap-3 animate-fade-up stagger-in" style={{ '--delay': '120ms' }}>
               <Link href="/jobs/new" className="primary-button animate-sheen">
-                ＋ Post a Job Request
+                ＋ Start a New Request
               </Link>
-              <a href="#job-board" className="secondary-button">
-                Explore the Job Board
+              <a href="#job-board" className="secondary-button motion-chip">
+                Browse Open Jobs
               </a>
             </div>
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-3xl bg-white/85 px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '60ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Live filters</p>
-                <p className="mt-2 text-sm text-slate-600">Search by keywords, category, and status in one place.</p>
+            <div className="mt-8 grid w-full gap-4 sm:grid-cols-3">
+              <div className="motion-card animate-fade-up stagger-in rounded-3xl bg-white/85 px-4 py-4 shadow-sm" style={{ '--delay': '60ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Clear job briefs</p>
+                <p className="mt-2 text-sm text-slate-600">Write requests with the right detail so the right people can respond faster.</p>
               </div>
-              <div className="rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '120ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-700">Fast posting</p>
-                <p className="mt-2 text-sm text-slate-600">Create polished job requests in a guided workflow.</p>
+              <div className="motion-card animate-fade-up stagger-in rounded-3xl bg-amber-50 px-4 py-4" style={{ '--delay': '120ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-700">Smart browsing</p>
+                <p className="mt-2 text-sm text-slate-600">Filter open work by keyword, trade, and status without losing context.</p>
               </div>
-              <div className="rounded-3xl bg-teal-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '180ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Secure actions</p>
-                <p className="mt-2 text-sm text-slate-600">Authenticated posting and deletion with cleaner control.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="glass-panel flex flex-col justify-between px-6 py-6 animate-fade-up" style={{ animationDelay: '100ms' }}>
-          <div>
-            <p className="section-label mb-3">At a glance</p>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              <div className="rounded-3xl bg-white/80 px-5 py-5 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Open requests</p>
-                <p className="mt-3 text-4xl font-extrabold text-slate-900">{openJobs}</p>
-                <p className="mt-2 text-sm text-slate-500">Fresh work currently waiting for responses.</p>
-              </div>
-              <div className="rounded-3xl bg-gradient-to-br from-teal-700 to-slate-900 px-5 py-5 text-white shadow-lg">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-100/80">Coverage</p>
-                <p className="mt-3 text-3xl font-extrabold">{activeAreas || 0} areas</p>
-                <p className="mt-2 text-sm text-teal-50/80">Locations represented on the current board.</p>
+              <div className="motion-card animate-fade-up stagger-in rounded-3xl bg-teal-50 px-4 py-4" style={{ '--delay': '180ms' }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Confident actions</p>
+                <p className="mt-2 text-sm text-slate-600">Secure sign-in and cleaner management for posting, reviewing, and updating jobs.</p>
               </div>
             </div>
-          </div>
-          <div className="mt-5 rounded-3xl bg-amber-50 px-5 py-5 text-sm leading-7 text-slate-600">
-            Tip: start with keyword search, then narrow with category and status to get to the right request quickly.
           </div>
         </div>
       </section>
 
-      <section id="job-board" className="glass-panel px-5 py-5 sm:px-6 sm:py-6 animate-fade-up" style={{ animationDelay: '140ms' }}>
+      <section
+        id="job-board"
+        className="glass-panel motion-card animate-fade-up stagger-in px-5 py-5 sm:px-6 sm:py-6"
+        style={{ '--delay': '140ms' }}
+      >
         <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
             <label htmlFor="job-keyword-search" className="section-label mb-2 block">
@@ -178,7 +166,7 @@ export default function HomePage() {
                   <button
                     key={status}
                     onClick={() => setStatusFilter(status)}
-                    className={`rounded-full border px-3.5 py-2 text-sm font-semibold transition-all ${
+                    className={`motion-chip rounded-full border px-3.5 py-2 text-sm font-semibold transition-all ${
                       statusFilter === status
                         ? STATUS_PILL_ACTIVE[status]
                         : 'border-slate-200 bg-white/75 text-slate-600 hover:border-teal-300 hover:text-teal-700'
@@ -193,7 +181,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <button onClick={loadJobs} disabled={loading} className="secondary-button self-end whitespace-nowrap">
+            <button onClick={loadJobs} disabled={loading} className="secondary-button motion-chip self-end whitespace-nowrap">
               <span className={loading ? 'inline-block animate-spin' : ''}>↻</span> Refresh
             </button>
           </div>
@@ -206,7 +194,7 @@ export default function HomePage() {
               <button
                 key={category}
                 onClick={() => setCategoryFilter(category)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
+                className={`motion-chip rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
                   categoryFilter === category
                     ? 'border-teal-700 bg-teal-700 text-white shadow-md'
                     : 'border-slate-200 bg-white/75 text-slate-600 hover:border-teal-300 hover:text-teal-700'
@@ -235,7 +223,7 @@ export default function HomePage() {
       )}
 
       {!loading && !error && jobs.length === 0 && (
-        <div className="glass-panel py-16 text-center animate-fade-up">
+        <div className="glass-panel motion-card py-16 text-center animate-fade-up">
           <div className="mb-5 inline-flex h-20 w-20 items-center justify-center rounded-full bg-teal-50 text-4xl animate-soft-pulse">
             📋
           </div>
@@ -259,14 +247,15 @@ export default function HomePage() {
               <Link
                 key={job._id}
                 href={`/jobs/${job._id}`}
-                className="group block animate-fade-in"
-                style={{ animationDelay: `${index * 40}ms` }}
+                className="group block animate-fade-in stagger-in"
+                style={{ '--delay': `${index * 45}ms` }}
               >
                 <div
-                  className={`glass-panel border-l-4 h-full p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] ${
+                  className={`glass-panel motion-card border-l-4 h-full overflow-hidden p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] ${
                     STATUS_LEFT[job.status] || 'border-l-gray-300'
                   }`}
                 >
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
                   <div className="mb-3 flex flex-wrap items-center gap-2">
                     <span
                       className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
