@@ -96,16 +96,13 @@ export default function HomePage() {
         <div className="glass-panel-strong motion-card animate-fade-up relative w-full overflow-hidden px-6 py-8 sm:px-8 sm:py-10">
           <div className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-teal-300/25 blur-3xl animate-drift" />
           <div className="absolute bottom-0 left-0 h-36 w-36 rounded-full bg-amber-200/30 blur-3xl animate-soft-pulse" />
-          <div className="absolute right-6 top-6 hidden rounded-full border border-white/70 bg-white/80 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-700 shadow-lg backdrop-blur md:inline-flex animate-bob">
-            Trusted local professionals
-          </div>
           <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center">
             <p className="section-label mb-3">Home services, made simple</p>
             <h1 className="font-display text-4xl font-semibold leading-[1.02] text-slate-900 sm:text-5xl lg:text-[3.45rem]">
               Post a job in minutes and connect with trusted tradespeople near you.
             </h1>
-            <p className="mt-5 max-w-3xl text-[15px] leading-8 text-slate-600 sm:text-base">
-              GlobalTNA gives homeowners a clearer way to describe the work, browse active requests, and move from first post to first reply without friction.
+            <p className="mt-5 max-w-2xl text-[15px] leading-8 text-slate-600 sm:text-base">
+              Post the work, filter open requests, and move quickly without extra steps.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2 text-sm font-medium text-slate-600 animate-fade-up stagger-in" style={{ '--delay': '90ms' }}>
               <span className="rounded-full bg-white/80 px-3 py-1.5 shadow-sm">Fast to post</span>
@@ -120,19 +117,8 @@ export default function HomePage() {
                 Browse Open Jobs
               </a>
             </div>
-            <div className="mt-8 grid w-full gap-4 sm:grid-cols-3">
-              <div className="motion-card animate-fade-up stagger-in rounded-3xl bg-white/85 px-4 py-4 shadow-sm" style={{ '--delay': '60ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Clear job briefs</p>
-                <p className="mt-2 text-sm text-slate-600">Write requests with the right detail so the right people can respond faster.</p>
-              </div>
-              <div className="motion-card animate-fade-up stagger-in rounded-3xl bg-amber-50 px-4 py-4" style={{ '--delay': '120ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-700">Smart browsing</p>
-                <p className="mt-2 text-sm text-slate-600">Filter open work by keyword, trade, and status without losing context.</p>
-              </div>
-              <div className="motion-card animate-fade-up stagger-in rounded-3xl bg-teal-50 px-4 py-4" style={{ '--delay': '180ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Confident actions</p>
-                <p className="mt-2 text-sm text-slate-600">Secure sign-in and cleaner management for posting, reviewing, and updating jobs.</p>
-              </div>
+            <div className="mt-7 rounded-full border border-white/70 bg-white/70 px-4 py-2 text-sm text-slate-600 shadow-sm backdrop-blur">
+              Search by keyword, filter by trade, and open the full request in one click.
             </div>
           </div>
         </div>

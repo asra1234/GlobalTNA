@@ -162,7 +162,7 @@ export default function JobDetailPage() {
         ← Back to jobs
       </Link>
 
-      <div className="grid gap-6 lg:grid-cols-[1.18fr_0.82fr]">
+      <div className="space-y-6">
         <section className="glass-panel overflow-hidden">
           <div className={`relative overflow-hidden bg-gradient-to-r ${headerGradient} px-6 py-6 text-white sm:px-8`}>
             <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
@@ -268,31 +268,21 @@ export default function JobDetailPage() {
               )}
             </div>
           </div>
-        </section>
-
-        <aside className="space-y-6">
-          <section className="glass-panel px-6 py-6">
-            <p className="section-label mb-3">Snapshot</p>
-            <div className="space-y-4">
-              <div className="rounded-3xl bg-white/80 px-4 py-4 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Current status</p>
-                <p className="mt-2 text-lg font-bold text-slate-900">{job.status}</p>
+          <div className="border-t border-slate-200/60 px-6 py-6 sm:px-8">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="section-label mb-1">Manage request</p>
+                <p className="text-sm text-slate-500">Delete this request only if you no longer need it.</p>
               </div>
-              <div className="rounded-3xl bg-teal-50 px-4 py-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">Category</p>
-                <p className="mt-2 text-lg font-bold text-slate-900">{job.category || 'Unassigned'}</p>
+              <div className="rounded-full bg-white/70 px-3 py-1 text-sm font-medium text-slate-600">
+                {job.category || 'General'}
               </div>
             </div>
-          </section>
-
-          <section className="glass-panel px-6 py-6">
-            <p className="section-label mb-3">Danger zone</p>
-            <p className="mb-4 text-sm leading-7 text-slate-500">Deleting a request removes it permanently from the marketplace.</p>
             {auth ? (
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
                 {deleting ? (
                   <><span className="inline-block animate-spin">↻</span> Deleting…</>
@@ -303,13 +293,13 @@ export default function JobDetailPage() {
             ) : (
               <Link
                 href={`/auth?next=/jobs/${params.id}`}
-                className="secondary-button w-full"
+                className="secondary-button w-full sm:w-auto"
               >
                 Sign in to delete
               </Link>
             )}
-          </section>
-        </aside>
+          </div>
+        </section>
       </div>
     </div>
   );

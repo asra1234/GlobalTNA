@@ -87,7 +87,7 @@ export default function AuthPage() {
         ← Back home
       </Link>
 
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <section className="glass-panel-strong relative overflow-hidden px-6 py-8 text-slate-900 sm:px-8 sm:py-10">
           <div className="absolute -right-10 top-0 h-40 w-40 rounded-full bg-teal-200/40 blur-3xl" />
           <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-amber-200/40 blur-3xl" />
@@ -97,34 +97,15 @@ export default function AuthPage() {
             <p className="mt-4 max-w-md text-sm leading-7 text-slate-600 sm:text-base">
               {subtitle}
             </p>
-
-            <div className="mt-6 inline-flex rounded-full border border-white/70 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-teal-700 shadow-sm">
-              Fast, secure access
-            </div>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="motion-card rounded-3xl bg-white/85 px-4 py-4 shadow-sm animate-fade-up" style={{ animationDelay: '60ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">Quick</p>
-                <p className="mt-2 text-sm text-slate-600">Get in and continue where you left off.</p>
-              </div>
-              <div className="motion-card rounded-3xl bg-amber-50 px-4 py-4 animate-fade-up" style={{ animationDelay: '120ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Clear</p>
-                <p className="mt-2 text-sm text-slate-600">One simple screen for sign in and sign up.</p>
-              </div>
-              <div className="motion-card rounded-3xl bg-gradient-to-br from-teal-700 to-slate-900 px-4 py-4 text-white shadow-sm animate-fade-up" style={{ animationDelay: '180ms' }}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-100">Safe</p>
-                <p className="mt-2 text-sm text-teal-50/90">Protected actions stay tied to your account.</p>
-              </div>
-            </div>
+            <p className="mt-6 max-w-sm text-sm leading-7 text-slate-500">
+              Use one simple form to sign in or create an account and continue straight to your next step.
+            </p>
           </div>
         </section>
 
         <section className="glass-panel px-6 py-6 sm:px-8 sm:py-8">
           <div className="mb-5">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">{mode === 'login' ? 'Sign in' : 'Sign up'}</p>
-            <p className="mt-2 text-sm leading-6 text-slate-500">
-              {mode === 'login' ? 'Use your email and password.' : 'Just a few details to get started.'}
-            </p>
           </div>
 
           <div className="inline-flex rounded-2xl bg-white/70 p-1.5 shadow-sm">

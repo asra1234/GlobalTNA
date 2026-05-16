@@ -57,12 +57,9 @@ export default function RootLayout({ children }) {
               </div>
               <div>
                 <p className="text-sm font-bold">GlobalTNA</p>
-                <p className="text-xs text-slate-500">Find, post, and manage local trade work faster.</p>
+                <p className="text-xs text-slate-500">Post and manage local trade work faster.</p>
               </div>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-slate-500">
-              A calmer, faster request flow for homeowners and trusted tradespeople, with live status updates and secure posting.
-            </p>
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">© {new Date().getFullYear()}</p>
           </div>
         </footer>
