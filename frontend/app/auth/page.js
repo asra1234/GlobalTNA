@@ -87,7 +87,7 @@ export default function AuthPage() {
         ← Back home
       </Link>
 
-      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div className="grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
         <section className="glass-panel-strong relative overflow-hidden px-6 py-8 text-slate-900 sm:px-8 sm:py-10">
           <div className="absolute -right-10 top-0 h-40 w-40 rounded-full bg-teal-200/40 blur-3xl" />
           <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-amber-200/40 blur-3xl" />
@@ -103,26 +103,34 @@ export default function AuthPage() {
           </div>
         </section>
 
-        <section className="glass-panel px-6 py-6 sm:px-8 sm:py-8">
-          <div className="mb-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">{mode === 'login' ? 'Sign in' : 'Sign up'}</p>
-          </div>
-
-          <div className="inline-flex rounded-2xl bg-white/70 p-1.5 shadow-sm">
+        <section className="auth-shell px-4 py-4 sm:px-5 sm:py-5">
+          <div
+            role="tablist"
+            aria-label="Authentication mode"
+            className="grid grid-cols-2 gap-2"
+          >
             <button
+              id="sign-in-tab"
               type="button"
               onClick={() => setMode('login')}
-              className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
-                mode === 'login' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500'
+              role="tab"
+              aria-selected={mode === 'login'}
+              aria-controls="auth-panel"
+              className={`auth-tab ${
+                mode === 'login' ? 'auth-tab-active' : 'auth-tab-idle'
               }`}
             >
               Sign In
             </button>
             <button
+              id="sign-up-tab"
               type="button"
               onClick={() => setMode('register')}
-              className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
-                mode === 'register' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500'
+              role="tab"
+              aria-selected={mode === 'register'}
+              aria-controls="auth-panel"
+              className={`auth-tab ${
+                mode === 'register' ? 'auth-tab-active' : 'auth-tab-idle'
               }`}
             >
               Sign Up
@@ -135,7 +143,19 @@ export default function AuthPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <div
+            id="auth-panel"
+            role="tabpanel"
+            aria-labelledby={mode === 'login' ? 'sign-in-tab' : 'sign-up-tab'}
+            className="auth-form-panel mt-4"
+          >
+            <div className="border-b border-slate-200/80 px-5 py-5 text-center sm:px-7">
+              <h2 className="text-2xl font-semibold uppercase tracking-[0.04em] text-slate-700">
+                {mode === 'login' ? 'Login to your account' : 'Sign up for an account'}
+              </h2>
+            </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 px-5 py-5 sm:px-7 sm:py-6">
             {mode === 'register' && (
               <div className="animate-fade-in">
                 <label className="mb-1.5 block text-sm font-medium text-slate-700">Full name</label>
@@ -151,7 +171,7 @@ export default function AuthPage() {
             )}
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Email address</label>
               <input
                 type="email"
                 name="email"
@@ -175,20 +195,11 @@ export default function AuthPage() {
             </div>
 
             <button type="submit" disabled={submitting} className="primary-button w-full">
-              {submitting ? 'Please wait…' : mode === 'login' ? 'Continue' : 'Create account'}
+              {submitting ? 'Please wait…' : mode === 'login' ? 'Login' : 'Register'}
             </button>
           </form>
+          </div>
 
-          <p className="mt-5 text-center text-sm text-slate-500">
-            {mode === 'login' ? 'Need an account?' : 'Already have an account?'}{' '}
-            <button
-              type="button"
-              onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-              className="font-semibold text-teal-700 transition hover:text-teal-800"
-            >
-              {mode === 'login' ? 'Sign up' : 'Sign in'}
-            </button>
-          </p>
         </section>
       </div>
     </div>

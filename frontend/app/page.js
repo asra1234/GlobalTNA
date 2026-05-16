@@ -110,7 +110,7 @@ export default function HomePage() {
               <span className="rounded-full bg-white/70 px-3 py-1.5 shadow-sm">Built for local jobs</span>
             </div>
             <div className="mt-7 flex flex-wrap justify-center gap-3 animate-fade-up stagger-in" style={{ '--delay': '120ms' }}>
-              <Link href="/jobs/new" className="primary-button animate-sheen">
+              <Link href="/jobs/new" className="primary-button">
                 ＋ Start a New Request
               </Link>
               <a href="#job-board" className="secondary-button motion-chip">

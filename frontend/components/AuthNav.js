@@ -32,7 +32,7 @@ export default function AuthNav() {
         </Link>
         <Link
           href="/jobs/new"
-          className="primary-button animate-sheen px-4 py-2.5 text-sm"
+          className="primary-button px-4 py-2.5 text-sm"
         >
           <span className="text-base leading-none">＋</span> Post a Job
         </Link>
@@ -48,7 +48,7 @@ export default function AuthNav() {
       </div>
       <Link
         href="/jobs/new"
-        className="primary-button animate-sheen px-4 py-2.5 text-sm"
+        className="primary-button px-4 py-2.5 text-sm"
       >
         <span className="text-base leading-none">＋</span> Post a Job
       </Link>
