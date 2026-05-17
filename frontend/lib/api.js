@@ -1,6 +1,10 @@
 import { getAuthToken } from './auth';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (
+  process.env.NODE_ENV === 'production'
+    ? 'https://globaltna-production-7207.up.railway.app'
+    : 'http://localhost:5000'
+);
 
 function buildAuthHeaders() {
   const token = getAuthToken();
