@@ -80,7 +80,7 @@ export default function HomePage() {
       const data = await getJobs(filters);
       setJobs(data);
     } catch {
-      setError('Could not reach the server. Make sure the backend is running on port 5000.');
+      setError('Could not reach the server. Check that the backend is running and NEXT_PUBLIC_API_URL is set correctly.');
     } finally {
       setLoading(false);
     }
