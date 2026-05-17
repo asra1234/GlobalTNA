@@ -80,10 +80,13 @@ const SAMPLE_JOBS = [
   },
 ];
 
-async function seedJobs() {
-  const shouldReset = process.argv.includes('--reset');
+async function seedJobs(options = {}) {
+  const shouldReset = options.reset ?? process.argv.includes('--reset');
+  const shouldManageConnection = options.manageConnection ?? true;
 
-  await mongoose.connect(MONGO_URI);
+  if (shouldManageConnection) {
+    await mongoose.connect(MONGO_URI);
+  }
 
   if (shouldReset) {
     await JobRequest.deleteMany({});
@@ -102,20 +105,26 @@ async function seedJobs() {
   const totalJobs = await JobRequest.countDocuments();
 
   console.log(`Seed complete. Inserted: ${result.upsertedCount}, Updated: ${result.modifiedCount}, Total jobs: ${totalJobs}`);
+
+  return result;
 }
 
-if (process.argv.includes('--help')) {
-  console.log('Usage: npm run seed -- [--reset]');
-  console.log('--reset  Clear existing jobs before inserting sample jobs.');
-  process.exit(0);
-}
+module.exports = seedJobs;
 
-seedJobs()
-  .then(async () => {
-    await mongoose.disconnect();
-  })
-  .catch(async (error) => {
-    console.error('Failed to seed jobs:', error.message);
-    await mongoose.disconnect().catch(() => {});
-    process.exit(1);
-  });
+if (require.main === module) {
+  if (process.argv.includes('--help')) {
+    console.log('Usage: npm run seed -- [--reset]');
+    console.log('--reset  Clear existing jobs before inserting sample jobs.');
+    process.exit(0);
+  }
+
+  seedJobs()
+    .then(async () => {
+      await mongoose.disconnect();
+    })
+    .catch(async (error) => {
+      console.error('Failed to seed jobs:', error.message);
+      await mongoose.disconnect().catch(() => {});
+      process.exit(1);
+    });
+}

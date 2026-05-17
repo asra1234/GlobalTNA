@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const createApp = require('./app');
 const getMongoUri = require('./lib/getMongoUri');
+const seedJobs = require('./scripts/seedJobs');
 
 const app = createApp();
 
@@ -17,15 +18,27 @@ if (!MONGO_URI) {
 async function connectToMongo() {
   try {
     await mongoose.connect(MONGO_URI);
+    await seedJobs({ manageConnection: false });
     console.log('Connected to MongoDB');
+    return true;
   } catch (err) {
     console.error('MongoDB connection error:', err.message);
     console.log(`Retrying MongoDB connection in ${MONGO_RETRY_DELAY_MS / 1000} seconds...`);
-    setTimeout(connectToMongo, MONGO_RETRY_DELAY_MS);
+    setTimeout(startServer, MONGO_RETRY_DELAY_MS);
+    return false;
   }
 }
 
-app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
-  connectToMongo();
-});
+async function startServer() {
+  const isConnected = await connectToMongo();
+
+  if (!isConnected) {
+    return;
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Backend running on http://localhost:${PORT}`);
+  });
+}
+
+startServer();
