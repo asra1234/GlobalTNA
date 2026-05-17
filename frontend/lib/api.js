@@ -2,7 +2,7 @@ import { getAuthToken } from './auth';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || (
   process.env.NODE_ENV === 'production'
-    ? 'https://globaltna-production-7207.up.railway.app'
+    ? 'https://globaltna-production-ea4b.up.railway.app'
     : 'http://localhost:5000'
 );
 
